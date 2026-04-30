@@ -196,6 +196,5 @@ cv-image-processing-library/
 ├── task_1.py         # Task 1 — Selective Object Enhancement
 ├── task_2.py         # Task 2 — X-Ray Sharpening Pipelines
 ├── tests.ipynb       # Testing notebook for all tasks
-├── output.png        # Task 2 comparison output
 └── README.md
 ```
