@@ -111,7 +111,7 @@ def pipeline_clahe_laplacian(image, clip_limit=2.0, tile_grid_size=(8, 8), stren
     contrast_enhanced = _apply_clahe(image, clip_limit, tile_grid_size)
 
     # Stage B: Laplacian sharpening
-    # compares each pixel to its 4 neighbors — high difference = edge detected
+    # compares each pixel to its 4 neighbors , high difference = edge detected
     laplacian = cv2.Laplacian(contrast_enhanced, cv2.CV_32F) # detects edges using the Laplacian kernel
     sharpened = contrast_enhanced.astype(np.float32) + strength * laplacian # add detected edges back to enhance details
     return clip_and_convert(sharpened)
