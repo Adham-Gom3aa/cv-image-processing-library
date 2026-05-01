@@ -71,17 +71,6 @@ Three independent image enhancement pipelines for X-ray images, each using a dif
 Input X-ray → Pipeline 1 / Pipeline 2 / Pipeline 3 → Side-by-side Comparison
 ```
 
-### Shared Utilities
-
-| Function | Description |
-|---|---|
-| `load_image(path)` | Load image from disk as grayscale |
-| `save_image(image, path)` | Save grayscale image to disk |
-| `apply_kernel(image, kernel)` | Manual 2D convolution using NumPy stride tricks (no cv2.filter2D) |
-| `clip_and_convert(image)` | Clip float values to [0, 255] and convert to uint8 |
-
----
-
 ### Pipeline 1 — Unsharp Masking
 
 **Concept:**
@@ -100,14 +89,6 @@ output = original + strength × mask
 4. Add mask back scaled by `strength`
 5. Clip and convert to uint8
 
-**Parameters:**
-| Parameter | Default | Description |
-|---|---|---|
-| `blur_size` | 5 | Gaussian kernel size |
-| `sigma` | 1.0 | Gaussian standard deviation |
-| `strength` | 1.5 | Edge amplification strength |
-
----
 
 ### Pipeline 2 — CLAHE + Laplacian Sharpening
 
@@ -130,15 +111,6 @@ Laplacian kernel:
 [ 0, -1,  0 ]
 ```
 
-**Parameters:**
-| Parameter | Default | Description |
-|---|---|---|
-| `clip_limit` | 2.0 | Histogram clip limit per tile |
-| `tile_grid_size` | (8, 8) | Number of tiles (cols, rows) |
-| `strength` | 1.0 | Laplacian sharpening strength |
-
----
-
 ### Pipeline 3 — FFT Gaussian High-Pass Filter
 
 **Concept:**
@@ -150,14 +122,6 @@ Convert image to frequency domain → suppress low frequencies (smooth regions) 
 3. Blend filter: `combined = 1 + boost × HPF` (keeps low freqs, amplifies high freqs)
 4. Multiply FFT by filter → inverse FFT → take magnitude
 5. Clip and convert to uint8
-
-**Parameters:**
-| Parameter | Default | Description |
-|---|---|---|
-| `cutoff` | 30 | High-pass cutoff radius in frequency units |
-| `boost` | 2.0 | High-frequency amplification factor |
-
----
 
 ### Strengths & Weaknesses
 
