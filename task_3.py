@@ -9,7 +9,7 @@ def load_image(path):
     return img
 
 
-# ---------- Convert to Gray ----------
+# Convert RGB image to grayscale using weighted average
 def to_grayscale(image):
     height, width, _ = image.shape
     gray = np.zeros((height, width), dtype=np.float32)
@@ -24,15 +24,15 @@ def to_grayscale(image):
 
 # ---------- Analysis ----------
 def analyze_image(gray):
-    mean = np.sum(gray) / (gray.shape[0] * gray.shape[1])
+    mean = np.sum(gray) / (gray.shape[0] * gray.shape[1]) # Calculate average brightness of the image using mean 
 
-    variance = np.sum((gray - mean) ** 2) / (gray.shape[0] * gray.shape[1])
+    variance = np.sum((gray - mean) ** 2) / (gray.shape[0] * gray.shape[1]) # Measure image contrast using standard deviation
     std = np.sqrt(variance)
 
     return mean, std
 
 
-# ---------- Decision ----------
+# Classify image based on brightness and contrast statistics
 def classify_image(mean, std):
     if mean < 80:
         return "dark"
@@ -44,7 +44,7 @@ def classify_image(mean, std):
         return "normal"
 
 
-# ---------- Histogram Equalization (from scratch) ----------
+# Enhance dark image by redistributing intensity values
 def histogram_equalization(gray):
     hist = np.zeros(256)
 
@@ -63,7 +63,7 @@ def histogram_equalization(gray):
     return output
 
 
-# ---------- Gamma Correction (from scratch) ----------
+# Adjust image brightness using nonlinear gamma transformation if gamma>1( broght image)  if gamma<1 (darken image)
 def gamma_correction(gray, gamma=0.5):
     output = np.zeros_like(gray)
 
@@ -76,7 +76,7 @@ def gamma_correction(gray, gamma=0.5):
     return output
 
 
-# ---------- Contrast Stretching ----------
+# Stretch intensity range to improve image contrast
 def contrast_stretch(gray):
     min_val = np.min(gray)
     max_val = np.max(gray)
