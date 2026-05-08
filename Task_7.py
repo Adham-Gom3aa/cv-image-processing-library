@@ -2,22 +2,6 @@ import cv2
 import numpy as np
 from PIL import Image
 
-
-def extract_frames_from_gif(gif_path):
-    gif = Image.open(gif_path)
-    frames = []
-
-    for frame_idx in range(gif.n_frames):
-        gif.seek(frame_idx)
-
-        frame = np.array(gif.convert('RGB'))
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-
-        frames.append(frame)
-
-    return frames
-
-
 def rgb_to_grayscale(img):
     if img is None:
         raise ValueError("Input image cannot be None")
